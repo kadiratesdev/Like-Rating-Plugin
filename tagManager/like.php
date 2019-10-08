@@ -15,19 +15,21 @@
 <?php
   
   global $wpdb;
-  $result = $wpdb->get_results("SELECT * FROM wp_terms order by name desc");
+  $table_name = $wpdb->base_prefix."likePlugin";
  
+  $result = $wpdb->get_results("SELECT COUNT(postId) as Adet,postId,post_title,wp_posts.id FROM $table_name inner join wp_posts on wp_posts.ID = $table_name.postId GROUP by postId order by postId asc");
+
    ?>
-    <h1>Tag Listesi</h1>
+    <h1>Like Sıralaması</h1>
     <div class="table-responsive">
     <table  id="deneme" class=" table table-bordered " style="width:100%">
    
     <thead>
         <tr>
             <th>ID</th>
-            <th>Tag Name</th>
-            <th>Tag Count</th>
+            <th>Post Title</th>
             <th>Like Count</th>
+            <th>Tags</th>
         </tr>
 </thead>
 
@@ -35,15 +37,24 @@
         <tbody>
         <?php foreach ( $result as $print )   {
 
-$term = get_tag( $print->term_id );
-$count = $term->count;
 
-if(!isset($count))
-$count = 0;
-$termsCount = $wpdb->get_results("SELECT Count('term_taxonomy_id')as Sayi FROM wp_term_relationships where term_taxonomy_id=$print->term_id ");
+
 
 ?>
-        <tr><td><?php echo $print->term_id; ?></td><td><?php echo $print->name; ?></td><td><?php echo $termsCount[0]->Sayi; ?></td><td><?php echo $count; ?></td></tr>
+        <tr><td><?php echo $print->postId; ?></td><td><?php echo $print->post_title; ?></td><td><?php echo $print->Adet; ?></td><td>
+            <?php
+            
+        if(is_array(get_the_tags( $print->id ))){
+           foreach (get_the_tags( $print->id ) as $tag) {
+               echo $tag->name."<b> , </b>";
+           }
+        }
+        else{
+            echo "Bu Yazıda Etiket Kullanılmadı.";
+        }
+       
+
+         ?></td></tr>
          <?php }
         ?>
         </tbody>
@@ -57,7 +68,7 @@ $termsCount = $wpdb->get_results("SELECT Count('term_taxonomy_id')as Sayi FROM w
     <script>
  $(document).ready(function() {
       $('#deneme').dataTable({
-        "order": [[ 3, "desc" ]]
+        "order": [[ 3, "asc" ]]
       });  
   });
         </script>

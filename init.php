@@ -9,7 +9,6 @@ Author URI: www.kadirates.me
 License: GNU
 */
 
-// register My_Widget
 add_action( 'widgets_init', function(){
 	register_widget( 'My_Widget' );
 });
@@ -36,11 +35,6 @@ else{
 }
 
 
-
-
-
-
-
 add_action('wp_enqueue_scripts','Ajax_Js');
 function Ajax_Js() {
 	wp_enqueue_script( 'ajax-js-2','https://code.jquery.com/jquery-3.4.1.js');
@@ -60,8 +54,8 @@ function welcome_callback(){
 function list_tags_callback(){
 	include(dirname( __FILE__ ) .'/tagManager/welcome.php');
 }
-function settings_callback(){
-	include(dirname( __FILE__ ) .'/tagManager/settings.php');
+function like_callback(){
+	include(dirname( __FILE__ ) .'/tagManager/like.php');
 }
 function home(){
 	include(dirname( __FILE__ ) .'/tagManager/home.php');
@@ -73,7 +67,7 @@ function menuekle(){
 
 	add_menu_page('', 'Plugin Yönetimi', 'manage_options', 'home', 'home', plugins_url('like-unlike/images/icon.png',__DIR__));
 	add_submenu_page('home', 'Tag Listesi', 'Tag Listesi', 'manage_options','/welcome', 'list_tags_callback');
-	add_submenu_page(__FILE__, 'Settings', 'Settings', 'manage_options', __FILE__.'/settings.php', 'settings_callback');
+	add_submenu_page('home', 'Like Sıralaması', 'Like Sıralaması', 'manage_options', __FILE__.'/like.php', 'like_callback');
 	
 
 }
