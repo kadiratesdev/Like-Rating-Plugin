@@ -15,7 +15,7 @@ amaçlamaktadır.
 2. Wordpress sitenizin yönetim paneline giriş yapın.
 3. Eklentiler>Yeni Ekle>Eklenti Yükle sayfasına gidin.
 4. Dosya Seç diyerek like-unlike**.zip dosyasını seçin
-5. Eklentiyi Etkinleştire Basın.
+5. Eklentiyi Etkinleştire Basın. <br>
 <b>Not</b> : Alan adının ana dizininde kurulu olmayan wordpress sistemler için "src/script.js" girin.
 1. 36 Satırı bulun.
 2.  url: window.location.origin+'/<b>wp</b>/wp-content/plugins/like-unlike/addLike.php', <b>wp</b> yazan kısımı <br> 
